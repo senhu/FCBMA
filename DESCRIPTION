@@ -3,6 +3,7 @@ Title: Factor collapsing with Bayesian model averaging for regression models
 Version: 0.0.0.9000
 Authors@R: person("Sen", "Hu", email = "sen.hu.1@ucdconnect.ie", role = c("aut", "cre"))
 Description: Factor collapsing with Bayesian model averaging for regression models.
+URL: http://github.com/senhu/FCBMA
 Depends: R (>= 3.3.2)
 License: license
 Encoding: UTF-8
