@@ -165,7 +165,7 @@ FCBMA <-function(model,
                   Best.State=beststate,
                   All.BIC=BICval.vec,
                   All.States=Graycode.mat,
-                  Table[1:num.cutoff,]))}
+                  Table=Table[1:num.cutoff,]))}
   }
   if (method == "SA"){
     newdat <- eval(getCall(model)$data, envir = environment(formula(model)))
@@ -492,8 +492,8 @@ FCBMA <-function(model,
     All.Popn.States <- Popn
     All.BIC <- fitness.vec
     Best.BIC.trace <- fittestOne
-    if (cut){ take.n <- which(cumsum(bic.model.weight( sort(unique(Accept_bic), decreasing=F) )) >= cutoff)[1] }
-    else {take.n <- length(unique(Accept_bic))}
+    if (cut){ take.n <- which(cumsum(bic.model.weight( sort(unique(All.BIC), decreasing=F) )) >= cutoff)[1] }
+    else {take.n <- length(unique(All.BIC))}
     take.bic <- sort(unique(All.BIC))[1:take.n]
     take.weight <- bic.model.weight( sort(unique(All.BIC), decreasing=F) )[1:take.n]
     take.state <- NULL
