@@ -20,61 +20,29 @@ the best combinations
 When collapsing factors individually for the reason of computational intensity, this functions searches across the best results from each individual factor and find the best combinations across all factors
 }
 \examples{
-Res1 <- FactorCollapse_SA(model = mod1.1,
-                          varia.list = c("Make"),
-                          neighbour = "ChangeOne",
-                          Temp = 100,
-                          coolingRate = 0.2,
-                          stop.Temp = 0.1,
-                          Mtrial=20,
-                          AddOnSearch = F)
-Res1 <- Extract.SA.Res(Res1, threshold.val = 0.95)$State
+\donttest{
+r1 <- FCBMA(model = mod1,
+            varia.list = c("Make"),
+            method = "SA",
+            transition.method = "ChangeOne")
+res1 <- Extract.SA.Res(r1, threshold.val = 0.95)$State
 
-Res2 <- FactorCollapse_SA(model = mod1.1,
-                          varia.list = c("Zone"),
-                          neighbour = "ChangeOne",
-                          Temp = 100,
-                          coolingRate = 0.2,
-                          stop.Temp = 0.1,
-                          Mtrial=20,
-                          AddOnSearch = F)
-Res2 <- Extract.SA.Res(Res2, threshold.val = 0.95)$State
+r2 <- FCBMA(model = mod1,
+            varia.list = c("Zone"),
+            method = "SA",
+            transition.method = "ChangeOne")
+res2 <- Extract.SA.Res(r2, threshold.val = 0.95)$State
 
-Res3 <- FactorCollapse_SA(model = mod1.1,
-                          varia.list = c("Kilometres"),
-                          neighbour = "ChangeOne",
-                          Temp = 100,
-                          coolingRate = 0.9,
-                          stop.Temp = 0.1,
-                          Mtrial=30,
-                          AddOnSearch = F)
-Res3 <- Extract.SA.Res(Res3, threshold.val = 0.95)$State
+r3 <- FCBMA(model = mod1,
+            varia.list = c("Kilometres"),
+            method = "SA",
+            transition.method = "ChangeOne")
+res3 <- Extract.SA.Res(r3, threshold.val = 0.95)$State
 z <- CombineCollapsing(all.collapsings = list(unlist(Res1$Accept.States, recursive = F),
-                                      unlist(Res2$Accept.States, recursive = F),
-                                      unlist(Res3$Accept.States, recursive = F)),
+                                              unlist(Res2$Accept.States, recursive = F),
+                                              unlist(Res3$Accept.States, recursive = F)),
                                 varia.list=c("Make", "Zone", "Kilometres"),
-                                model=mod1.1)
-ha <- combineCollapsing(all.collapsings = list(ny.1$State, ny.2$State),
-                  varia.list = list(c("PH_GEND",
-                                      "VEH_FUEL_TYPE",
-                                      "VEH_TRANS",
-                                      "DRIVEOPT",
-                                      "CLASSOFUSE",
-                                      "NCD_PROT",
-                                      "STEPBACK",
-                                      "EXCESS_TOT.factor",
-                                      "SECONDCAR",
-                                      "PRODUCT",
-                                      "PAYPLAN",
-                                      "LIC_FP_GROUP",
-                                      "PH_PENPTS",
-                                      "MD_LIC_CAT_A",
-                                      "NCDLAST.factor",
-                                      "NUMDRIVS.factor",
-                                      "MILEAGE_B",
-                                      "SRC_CHANNEL_A",
-                                      "PREM_IGNITIONDISC"),
-                                    c("COUNTYNAME") )
-                  ,
-                  model = train.sev.rx.1)
+                                model=mod1)
+}
+
 }

@@ -1,0 +1,22 @@
+---
+title: "FCBMA-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FCBMA-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The `mvClaim` package provides a flexible modelling framework of mixture of experts (MoE) using bivariate gamma distributions and a range of parsimonious parameterizations via the EM algorithm, as introduced in Hu et al. (2019).
+It utilizes the bivariate gamma distribution proposed by Cheriyan (1941) and Ramabhadran (1951), which has not received much attention in the past. 
+
+```{r eval=FALSE}
+library(FCBMA)
+```

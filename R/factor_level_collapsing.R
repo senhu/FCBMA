@@ -1,14 +1,20 @@
 #' Factor collapsing over one factor
 #'
 #' For a given (standard) gray code, and a variable, this function returns the collapsed version of this factor based on this given gray code
+#'
 #' @param variable a given variable
 #' @param graycode a given graycode
+#'
 #' @return a collapsed version of the input variable
+#'
 #' @examples
-#' factor.level.collapsing(data$Make, c(1,2,3,4,5,6,7,8,8))
-#' @export factor.level.collapsing
+#' data(sweden)
+#' factor_level_collapsing(sweden$Make, c(1,2,3,4,5,6,7,8,8))
+#'
+#' @export
 
-factor.level.collapsing <- function(variable, graycode){
+factor_level_collapsing <- function(variable,
+                                    graycode){
   newvar <- variable
   level.num <- length(unique(graycode))
   for (i in c(1:level.num)){

@@ -20,4 +20,5 @@ Split a vector at a certain location/position
 \examples{
 x <- c(1,2,3,4,5)
 SplitAt(x, 3)
+
 }

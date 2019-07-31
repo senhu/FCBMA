@@ -1,0 +1,24 @@
+AddOnSearch             Search the optimal model region from a
+                        close-to-optimum model
+FCBMA                   Factor collapsing (FC) with Bayesian model
+                        averaging (BMA) with lm, glm, rxGlm (package
+                        "RevoScaleR")
+Gini                    Gini index calculation
+SplitAt                 Split a vector at a certain location/position
+TournamentSelection     Tournament Selection
+bic.model.weight        Approximate model posterior probability using
+                        BIC.
+collapse.data           Reorganise dataset
+combineCollapsing       Combining the best collapsings from factors
+                        collapsed separately
+convert.cano.graycode   Convert a given graycode into its canonical
+                        format
+factor.level.collapsing
+                        Factor collapsing over one factor
+fc.model.refit          Refit a model based on collapsed factors
+graycode.to.partition   Convert graycode to listing of partition
+partition.neighbour     Generate neighbours of a graycode with or
+                        withour pre-specified restrictions
+predict.fc              Prediction based on FC
+rxAICtoBIC              convert from AIC to BIC, from a rxGlm model
+setPartitions           Generate set partitions

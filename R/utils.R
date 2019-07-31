@@ -1,22 +1,21 @@
-#' Gini index calculation
-#'
-#' Gini index calculation
-#' @param a actual value
-#' @param p prediction
-#' @param expo exposure
-#' @param plot logica; whether to plot
-#' @return Gini index
-#' @examples
-#' Gini(a = a,
-#'      p = p,
-#'      expo = expo)
-#' Gini(a = a,
-#'      p = pred1,
-#'      expo = expo)
-#' a <- c(4,2,6,5,8)
-#' p <- c(5,5,5,4,6)
-#' Gini(a,p)/Gini(a,a)
-#' @export Gini
+
+rxAICtoBIC <- function(rxmodel, rxdata){
+  if (is.na(rxmodel$aic[1])) {stop("No AIC avaialbe for the rx-model")}
+  bic.val <- rxmodel$aic - 2*rxmodel$df[1] + log(nrow(rxdata))*rxmodel$df[1]
+  loglike.val <- (rxmodel$aic - 2*rxmodel$df[1])/(-2)
+  return(c(bic.val, loglike.val))
+}
+
+
+# This tournament selection is written for function minimisation
+TournamentSelection <- function(num, k, fitvec){
+  pick.vec <- rep(0, num)
+  for (j in c(1:num)){
+    temp.min <- min(fitvec[sample(c(1:length(fitvec)), k, replace = TRUE)])
+    pick.vec[j] <- which(fitvec==temp.min)[1]
+  }
+  return(pick.vec)
+}
 
 Gini <- function(a, p, expo = NULL, plot=FALSE) {
   if (length(a) !=  length(p)){stop("Actual and Predicted need to be equal lengths!")}

@@ -2,9 +2,18 @@
 % Please edit documentation in R/AddOnSearch.R
 \name{AddOnSearch}
 \alias{AddOnSearch}
+\alias{AddOnSearch.glm}
+\alias{AddOnSearch.rxGlm}
 \title{Search the optimal model region from a close-to-optimum model}
 \usage{
-AddOnSearch(merge.code, varia.list, model, transition.method, IncludeOrigin)
+AddOnSearch(merge.code, varia.list, model, transition.method,
+  IncludeOrigin = FALSE)
+
+\method{AddOnSearch}{glm}(merge.code, varia.list, model, transition.method,
+  IncludeOrigin = FALSE)
+
+\method{AddOnSearch}{rxGlm}(merge.code, varia.list, model,
+  transition.method, IncludeOrigin = FALSE)
 }
 \arguments{
 \item{merge.code}{the given close-to-optimum graycode, list(code1, code2)}
@@ -12,6 +21,10 @@ AddOnSearch(merge.code, varia.list, model, transition.method, IncludeOrigin)
 \item{varia.list}{a list of variables, c(.., .., ..)}
 
 \item{model}{the full model}
+
+\item{transition.method}{Transition method to change one graycode to its neighbouring graycode, choose from \code{"ChangeOne"}, \code{"GroupSplit"}. The default is \code{"ChangeOne"}.}
+
+\item{IncludeOrigin}{Logical; When choose neighbouring graycode, should the input graycode be included or not.}
 }
 \value{
 the optimal partitions
@@ -19,32 +32,31 @@ the optimal partitions
 \description{
 Given a close-to-optimum model, this function continuously searches the neighbour models to find the global optimum, through a complete search
 }
-\note{
-check "addon.code.trace" and "addon.bic.trace" in global environment
-}
 \examples{
-code1 = c(1,2,2,3,3)
-code2 = c(1,2,3,4,5,2,6,7,8)
-code1 = c(1,1,1,2,3)
-code2 = c(1,2,3,3,5,2,6,7,7)
+\donttest{
+data("sweden")
+m1 <- glm(Claims ~ Kilometres+Zone+Bonus+Make, offset = log(Insured),
+          data = sweden, family = "poisson")
 
-addon.code.trace <<- NULL
-addon.bic.trace <<- NULL
-AddOnSearch.function(merge.code = list(code1,code2),
+code1 <- c(1,2,2,3,3)
+code2 <- c(1,2,3,4,5,2,6,7,8)
+assign("addon.bic.trace", NULL, envir = environment(FCBMA))
+assign("addon.code.trace", NULL, envir = environment(FCBMA))
+AddOnSearch(merge.code = list(code1,code2),
             varia.list = c("Kilometres", "Make"),
-            model = mod2.4)
-addon.code.trace
-addon.bic.trace
+            model = m1,
+            transition.method = "ChangeOne")
+get("addon.bic.trace", envir = environment(FCBMA))
+get("addon.code.trace", envir = environment(FCBMA))
 
-addon.code.trace <<- NULL
-addon.bic.trace <<- NULL
-AddOnSearch.function(merge.code = list(c(1,2,2,2,3)),
-                     varia.list = c("Kilometres"),
-                     model = mod2.4)
-addon.code.trace
-addon.bic.trace
+assign("addon.bic.trace", NULL, envir = environment(FCBMA))
+assign("addon.code.trace", NULL, envir = environment(FCBMA))
+AddOnSearch(merge.code = list(c(1,2,2,2,3)),
+            varia.list = c("Kilometres"),
+            model = m1,
+            transition.method = "ChangeOne")
+get("addon.bic.trace", envir = environment(FCBMA))
+get("addon.code.trace", envir = environment(FCBMA))
+}
 
-resss <- rxAddOnSearch.function(final.merge.code = list(as.vector(Extract.SA.Res( countyfreq.res[[2]], 0.6)$State[[2]])),
-varia.list = c("COUNTYNAME"),
-mod=fin.freq.mod.rx)
 }

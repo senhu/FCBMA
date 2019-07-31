@@ -27,25 +27,19 @@ A list with the elements
 \item{BIC}{The BIC value of the refitted model}
 \item{AIC}{The AIC value of the refitted model}
 \item{logLik}{The log-likelihood of the refitted model}
-\item{refitted model}{Details of the refitted model}
+\item{model}{Details of the refitted model}
 }
 \description{
 Refit a model based on collapsed factors
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{glm}: Refit the standard glm model class
-
-\item \code{rxGlm}: Refit the rxGlm model class
-
-\item \code{lm}: Refit the lm model class
-}}
-
 \examples{
-fc.model.refit(varia.list=c("Kilometres"),
-               merge.list=list(c(1,2,3,4,5)),
-               mod = mod1.1)
-fc.model.refit(varia.list=c("Kilometres, Make"),
-               merge.list=list(c(1,2,3,4,5), c(1,2,3,4,5,6,7,8,8)),
-               mod = mod1.1)
+data("sweden")
+m1 <- glm(Claims ~ Kilometres+Zone+Bonus+Make, offset = log(Insured),
+          data = sweden, family = "poisson")
+m2 <- fc.model.refit(varia.list=c("Kilometres"),
+                     merge.list=list(c(1,2,3,3,4)),
+                     mod = m1)
+m3 <- fc.model.refit(varia.list=c("Kilometres, Make"),
+                     merge.list=list(c(1,2,3,4,5), c(1,2,3,4,5,6,7,8,8)),
+                     mod = m1)
 }

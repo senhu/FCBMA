@@ -2,12 +2,12 @@
 % Please edit documentation in R/setPartitions.R
 \name{setPartitions}
 \alias{setPartitions}
-\alias{setPartitions.restricted}
+\alias{setPartitions_restricted}
 \title{Generate set partitions}
 \usage{
 setPartitions(num)
 
-setPartitions.restricted(num, group = NULL, apart = NULL)
+setPartitions_restricted(num, group = NULL, apart = NULL)
 }
 \arguments{
 \item{num}{the number of elements in a set}
@@ -27,12 +27,12 @@ This function is based on the \code{\link[partitions]{setparts}} function from \
 }
 \examples{
 setPartitions(4)
-setPartitions.restricted(num=4, group=NULL, apart=c(2,3))
+setPartitions_restricted(num=4, group=NULL, apart=c(2,3))
 }
 \references{
 R. K. S. Hankin 2007. "Set partitions in R". Journal of Statistical Software, Volume 23, code snippet 2
 
 R. K. S. Hankin 2006. Additive integer partitions in R. Journal of Statistical Software, Code Snippets 16(1)
 
-Hu, S., O'Hagan, A. and Murphy, T. B. (2007). Motor Insurance Accidental Damage Claims Modelling with Factor Collapsing and Bayesian model Averaging
+Hu, S., O'Hagan, A. and Murphy, T. B. (2018). Motor insurance claims modelling with factor collapsing and Bayesian model averaging
 }

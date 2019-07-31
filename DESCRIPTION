@@ -1,14 +1,25 @@
 Package: FCBMA
 Title: Factor collapsing with Bayesian model averaging for regression models
-Version: 0.0.0.9000
-Authors@R: person("Sen", "Hu", email = "sen.hu.1@ucdconnect.ie", role = c("aut", "cre"))
-Description: Factor collapsing with Bayesian model averaging for regression models.
+Version: 0.1.0
+Authors@R: c(
+    person("Sen", "Hu", email = "ethansen.hu@gmail.com", role = c("aut", "cre")),
+    person("Adrian", "O Hagan", email = "adrian.ohagan@ucd.ie", role = "ctb"),
+    person("Thomas Brendan", "Murphy", email = "brendan.murphy@ucd.ie", role = "ctb")
+    )
 URL: http://github.com/senhu/FCBMA
-Depends: R (>= 3.3.2)
-License: license
+BugReports: http://github.com/senhu/FCBMA/issues
+Description: Factor collapsing with Bayesian model averaging for regression models.
+Depends: R (>= 3.3.0)
+License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
-Imports: partitions,
-    combinat
-Suggests: BMA
-RoxygenNote: 6.0.1.9000
+Imports: 
+    partitions,
+    combinat,
+    stats
+Suggests: 
+    knitr,
+    rmarkdown,
+    RevoScaleR
+RoxygenNote: 6.1.1
+VignetteBuilder: knitr

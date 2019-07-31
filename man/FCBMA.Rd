@@ -4,12 +4,12 @@
 \alias{FCBMA}
 \title{Factor collapsing (FC) with Bayesian model averaging (BMA) with lm, glm, rxGlm (package "RevoScaleR")}
 \usage{
-FCBMA(model, varia.list, method = c("complete", "SA", "GA"),
+FCBMA(model, varia.list, method = "complete",
   transition.method = "ChangeOne", IncludeOrigin = FALSE,
-  AddOnSearch = FALSE, group = NULL, apart = NULL, cut = FALSE,
-  cutoff = 0.8, Temp = 10000, coolingRate = 0.7, stop.Temp = 1e-05,
-  Mtrial = 20, popnSize = 20, CrossOverRate = 0.8, MutationRate = 0.1,
-  elitism = 0.1, MaxGen = 200, verbose = TRUE)
+  AddOnSearch = FALSE, group = NULL, apart = NULL,
+  control.SA = list(init.Temp = 10000, stop.Temp = 1e-05, coolingRate =
+  0.7, Mtrial = 20), control.GA = list(popnSize = 20, CrossOverRate =
+  0.8, MutationRate = 0.1, elitism = 0.1, MaxGen = 200), verbose = TRUE)
 }
 \arguments{
 \item{model}{The model used for factor collapsing.}
@@ -28,37 +28,34 @@ FCBMA(model, varia.list, method = c("complete", "SA", "GA"),
 
 \item{apart}{A (list of) vector indicating which elements must not be grouped together, the default is \code{NULL}.}
 
-\item{cut}{Logical; if \code{FALSE}, all searched results will be presented. If \code{TRUE}, only collapsed results above a certain cumulative BMA weights threshold will be presented. The default is \code{FALSE}.}
+\item{control.SA}{A list of control parameters for SA.
+\describe{
+\item{init.Temp}{Initial temperature, default value is 10000.}
+\item{stop.Temp}{Stoping temperature, default value is 1e-5.}
+\item{coolingRate}{Cooling rate, default value is 0.7.}
+\item{Mtrial}{Number of interations at each temperature level, default is 20.}
+}}
 
-\item{cutoff}{Only when \code{cut=TRUE}; threshold value of accummulated best few model weights, the default is 0.8}
-
-\item{Temp}{SA parameter, initial temperature, default value is 10000.}
-
-\item{coolingRate}{SA parameter, cooling rate, default value is 0.7.}
-
-\item{stop.Temp}{SA parameter, stoping temperature, default value is 1e-5.}
-
-\item{Mtrial}{SA parameter, number of interations at each temperature level, default is 20.}
-
-\item{popnSize}{GA parameter, population size, detaulf is 20.}
-
-\item{CrossOverRate}{GA parameter, crossover rate, default is 0.8.}
-
-\item{MutationRate}{GA parameter, mutation rate, default is 0.1.}
-
-\item{elitism}{GA parameter, elitism rate, default is 0.1.}
-
-\item{MaxGen}{GA parameter, maximum generation allowed, default is 200.}
+\item{control.GA}{A list of control parameters for GA.
+\describe{
+\item{popnSize}{Population size, detaulf is 20.}
+\item{CrossOverRate}{Crossover rate, default is 0.8.}
+\item{MutationRate}{Mutation rate, default is 0.1.}
+\item{elitism}{Elitism rate, default is 0.1.}
+\item{MaxGen}{Maximum generation allowed, default is 200.}
+}}
 
 \item{verbose}{Logical argument controlling whether progress will be printed while the search runs. Default is \code{TRUE}.}
 }
 \value{
 A list with the elements
 \describe{
-\item{Best.Bic}{The best value of BIC.}
-\item{Best.State}{The best partitions for all stated variables.}
-\item{All.BIC}{All the searched BIC values.}
-\item{All.States}{All the searched (combinations of) partitions.}
+\item{best.bic}{The best value of BIC.}
+\item{best.state}{The best partitions for all stated variables.}
+\item{all.bic}{All the searched BIC values.}
+\item{all.states}{All the searched (combinations of) partitions, in graycode.}
+\item{all.partitions}{All the searched (combinations of) partitions}
+\item{all.weights}{All the BMA weights of searched partitions.}
 \item{Table}{A summary table of best few BICs, partitions, BMA weights.}
 \item{Accept.BIC}{Accepted BIC values along SA search; only when \code{method="SA"}.}
 \item{Accept.States}{Accepted (combinations of) partitions along SA search; only when \code{method="SA"}.}
@@ -76,49 +73,46 @@ This function use FC-BMA method to refit linear or generalized linear models, me
 This version of stochastic search changes on the simulated annealing part. It changed the stochastic search method at each iteration, only one variable is picked and change to one of its neighbours the probability of being picked is based on the number of levels You also have the option of which method to select a neighbour of a graycode
 }
 \examples{
-# get the Sweden TP insurance data set
-library(faraway)
-data("motorins")
-dataset <- motorins
-dataset$Bonus <- as.factor(dataset$Bonus)
-dataset$Kilometres <- factor(dataset$Kilometres, ordered=F)
+data("sweden")
+m1 <- glm(Claims ~ Kilometres+Zone+Bonus+Make, offset = log(Insured),
+          data = sweden, family = "poisson")
+summary(m1)
 
-# Frequency Poisson GLM
-freq1 <- glm(Claims~Zone+Bonus+Make+Kilometres,
-             offset=log(Insured),
-             data=dataset,
-             family="poisson")
-summary(freq1)
+# complete search
+m2 <- FCBMA(model = m1,
+            varia.list = c("Kilometres"),
+            method = "complete",
+            verbose = FALSE)
 
-freq.comp <- FCBMA(freq1,
-                    varia.list = c("Kilometres"),
-                    method = "complete",
-                    verbose = TRUE)
-system.time({
-  freq.sa <- FCBMA(model=freq1,
-                   varia.list = c("Kilometres","Make"),
-                   method = "SA",
-                   transition.method = "ChangeOne",
-                   AddOnSearch = TRUE,
-                   Temp = 1000,
-                   coolingRate = 0.6,
-                   stop.Temp = 1e-5,
-                   Mtrial = 20,
-                   verbose = TRUE)
-})
-freq.sa$Best.State
-freq.sa$Best.BIC
-system.time({
-  freq.ga <- FCBMA(model=freq1,
-                   varia.list = c("Make"),
-                   method = "GA",
-                   transition.method = "ChangeOne",
-                   popnSize=20,CrossOverRate=0.8,MutationRate=0.1,
-                   elitism=0.1,
-                   MaxGen=100,
-                   verbose = TRUE)
-})
-freq.ga$Best.State
-freq.ga$Best.BIC
+\donttest{
+# SA search
+m3 <- FCBMA(model = m1,
+            varia.list = c("Kilometres","Make"),
+            method = "SA",
+            transition.method = "ChangeOne",
+            AddOnSearch = TRUE,
+            control.SA = list(init.Temp = 1000,
+                              coolingRate = 0.6,
+                              stop.Temp = 1e-5,
+                              Mtrial = 20),
+            verbose = TRUE)
+m3$best.state
+m3$best.bic
+
+# GA search
+m4 <- FCBMA(model=m1,
+            varia.list = c("Kilometres", "Make"),
+            method = "GA",
+            transition.method = "ChangeOne",
+            AddOnSearch= TRUE,
+            control.GA = list(popnSize=20,
+                              CrossOverRate=0.8,
+                              MutationRate=0.1,
+                              elitism=0.1,
+                              MaxGen=100),
+            verbose = TRUE)
+m4$best.state
+m4$best.bic
+}
 
 }
