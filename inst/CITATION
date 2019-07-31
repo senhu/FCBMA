@@ -1,0 +1,37 @@
+citHeader("To cite 'FCBMA' in publications, please use:")
+
+citEntry(entry = "Article",
+         title        = "Motor insurance claim modelling with factor collapsing and Bayesian model averaging",
+         author       = personList(as.person("Sen Hu"),
+                                   as.person("Adrian O'Hagan"),
+                                   as.person("T. Brendan. Murphy")),
+         journal      = "Stat",
+         year         = "2018",
+         url          = "https://doi.org/10.1002/sta4.180",
+         number       = "1",
+         volume       = "7",
+         pages        = "e180",
+         publisher    = "Wiley-Blackwell",
+
+         textVersion  =
+           paste("Hu, S., O'Hagan, A., and Murphy, T.B. (2018).",
+                 "Motor insurance claim modelling with factor collapsing and Bayesian model averaging.",
+                 "Stat, 7: e180.",
+                 "doi: 10.1002/sta4.180.")
+)
+
+citEntry(entry = "Manual",
+         title = "FCBMA: factor collapsing with Bayesian model averaging for regression models",
+         author= personList(as.person("Sen Hu"),
+                            as.person("Adrian O'Hagan"),
+                            as.person("T. Brendan. Murphy")),
+         year  = "2018",
+         note  = "R package version 0.1.0",
+         url   = "https://github.com/senhu/FCBMA",
+
+         textVersion  =
+           paste("Hu, S., O'Hagan, A., and Murphy, T.B. (2018).",
+                 "FCBMA: factor collapsing with Bayesian model averaging for regression models.",
+                 "R package version 0.1.0.",
+                 "https://github.com/senhu/FCBMA")
+)
