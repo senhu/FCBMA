@@ -92,8 +92,13 @@ print.summary.FCBMA <- function(x, digits = getOption("digits"), ...){
   cat("Best fitted model weight:", x$best.model.weight, "\n")
   cat("\n")
 
-  cat("summary of the best 5 collapsed models:", "\n")
-  print(x$table[1:5,], digits = digits)
+  if (nrow(x$table) < 5) {
+    cat("summary of the best", nrow(x$table), "collapsed models:", "\n")
+    print(x$table, digits = digits)
+  } else {
+    cat("summary of the best 5 collapsed models:", "\n")
+    print(x$table[1:5,], digits = digits)
+  }
   #
   invisible(x)
 }
