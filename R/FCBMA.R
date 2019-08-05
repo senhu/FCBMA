@@ -29,22 +29,19 @@
 #'
 #' @return A list with the elements
 #' \describe{
-#' \item{best.bic}{The best value of BIC.}
-#' \item{best.state}{The best partitions for all stated variables.}
-#' \item{all.bic}{All the searched BIC values.}
-#' \item{all.states}{All the searched (combinations of) partitions, in graycode.}
-#' \item{all.partitions}{All the searched (combinations of) partitions}
-#' \item{all.weights}{All the BMA weights of searched partitions.}
-#' \item{Table}{A summary table of best few BICs, partitions, BMA weights.}
-#' \item{Accept.BIC}{Accepted BIC values along SA search; only when \code{method="SA"}.}
-#' \item{Accept.States}{Accepted (combinations of) partitions along SA search; only when \code{method="SA"}.}
-#' \item{Best.BIC.trace}{Trace of best BIC values along GA search; only when \code{method="GA"}.}
-#' \item{AddOn.BestBIC}{The best BIC value found through the add-on greedy search, if \code{AddOnSearch=TRUE}.}
-#' \item{AddOn.BestState}{The best (combination of) partition found through the add-on greedy search, if \code{AddOnSearch=TRUE}.}
-#' \item{AddOn.BIC.trace}{The best BIC values found in each iteration through the add-on greedy search, if \code{AddOnSearch=TRUE}.}
-#' \item{AddOn.State.trace}{The best (combination of) partitions found in each iteration through the add-on greedy search, if \code{AddOnSearch=TRUE}.}
+#' \item{method}{The search method used in finding the optimal factor collapsings.}
+#' \item{variable}{The variables collapsed.}
+#' \item{best.bic}{The best value of BIC, corresponding to the \code{best.state}.}
+#' \item{best.state}{The best partitions of the stated variables, in graycode format.}
+#' \item{all.bic}{All the searched BIC values, in an ascending order.}
+#' \item{all.states}{A list, all the searched (combinations of) partitions, in graycode format, corresponding to \code{all.bic}.}
+#' \item{all.partitions}{A list, sll the searched (combinations of) partitions, corresponding to \code{all.bic}.}
+#' \item{all.weights}{All the BMA weights of searched partitions, , corresponding to \code{all.bic}, in a descending order.}
+#' \item{table}{A summary table of best few BICs, partitions, BMA weights.}
+#' \item{model}{The input baseline model based on which factor collapsing is implemented.}
+#' \item{addon}{An indicator of whether add-on greedy search is utilised.}
 #' }
-#' @note This version of stochastic search changes on the simulated annealing part. It changed the stochastic search method at each iteration, only one variable is picked and change to one of its neighbours the probability of being picked is based on the number of levels You also have the option of which method to select a neighbour of a graycode
+#'
 #' @examples
 #' data("sweden")
 #' m1 <- glm(Claims ~ Kilometres+Zone+Bonus+Make, offset = log(Insured),
