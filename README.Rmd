@@ -16,6 +16,12 @@ knitr::opts_chunk$set(
 
 Factor collapsing with Bayesian model averaging for regression models
 
+Authors:
+
+* Sen Hu (ethansen.hu@gmail.com)
+* Adrian O'Hagan (adrian.ohagan@ucd.ie)
+* Thomas Brendan Murphy (brendan.murphy@ucd.ie)
+
 ## Description
 
 The `FCBMA` package uses factor collapsing (FC) and Bayesian model averaging (BMA) to find the optimal manners of combinations of categorical levels within categorical variables (i.e. clulstering of categorical levels) in linear or generalized linear regression models, as introduced in Hu et al (2018)

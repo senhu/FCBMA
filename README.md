@@ -5,6 +5,12 @@
 
 Factor collapsing with Bayesian model averaging for regression models
 
+Authors:
+
+  - Sen Hu (<ethansen.hu@gmail.com>)
+  - Adrian O’Hagan (<adrian.ohagan@ucd.ie>)
+  - Thomas Brendan Murphy (<brendan.murphy@ucd.ie>)
+
 ## Description
 
 The `FCBMA` package uses factor collapsing (FC) and Bayesian model
